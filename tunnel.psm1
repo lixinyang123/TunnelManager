@@ -42,7 +42,7 @@ function Test-TunnelRunning {
 }
 
 function Get-ActiveTunnelIndex {
-    $tunnels = Get-TunnelList
+    $tunnels = @(Get-TunnelList)
     for ($i = 0; $i -lt $tunnels.Count; $i++) {
         if (Test-TunnelRunning $tunnels[$i]) {
             return $i
@@ -54,7 +54,7 @@ function Get-ActiveTunnelIndex {
 function Start-Tunnel {
     param ([int]$Index)
 
-    $tunnels = Get-TunnelList
+    $tunnels = @(Get-TunnelList)
     $SSH_CONFIG = $tunnels[$Index]
     $CONTROL_SOCKET = Get-ControlSocket $SSH_CONFIG
 
@@ -79,7 +79,7 @@ function Start-Tunnel {
 function Stop-Tunnel {
     param ([int]$Index)
 
-    $tunnels = Get-TunnelList
+    $tunnels = @(Get-TunnelList)
     $SSH_CONFIG = $tunnels[$Index]
     $CONTROL_SOCKET = Get-ControlSocket $SSH_CONFIG
 
@@ -105,7 +105,7 @@ function Stop-Tunnel {
 }
 
 function Show-TunnelList {
-    $tunnels = Get-TunnelList
+    $tunnels = @(Get-TunnelList)
     Write-Host "Available tunnels:" -ForegroundColor Cyan
     Write-Host ""
     for ($i = 0; $i -lt $tunnels.Count; $i++) {
@@ -118,7 +118,7 @@ function Show-TunnelList {
 }
 
 function Show-Status {
-    $tunnels = Get-TunnelList
+    $tunnels = @(Get-TunnelList)
     $activeIndex = Get-ActiveTunnelIndex
     if ($activeIndex -ne -1) {
         Write-Host "Active: [$activeIndex] $($tunnels[$activeIndex])" -ForegroundColor Green
@@ -159,7 +159,7 @@ function tunnel {
         }
 
         "start" {
-            $tunnels = Get-TunnelList
+            $tunnels = @(Get-TunnelList)
             Show-TunnelList
             $input = Read-Host "Select tunnel number (0-$($tunnels.Count - 1))"
 
