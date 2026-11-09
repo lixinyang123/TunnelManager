@@ -59,7 +59,7 @@ function Start-Tunnel {
     $CONTROL_SOCKET = Get-ControlSocket $SSH_CONFIG
 
     if (Test-TunnelRunning $SSH_CONFIG) {
-        $Env:ALL_PROXY = "socks5://127.0.0.1:$LOCAL_PORT"
+        $Env:ALL_PROXY = "socks5h://127.0.0.1:$LOCAL_PORT"
         Write-Host "Proxy resumed: $Env:ALL_PROXY" -ForegroundColor Green
         return
     }
@@ -70,7 +70,7 @@ function Start-Tunnel {
 
     if (Test-TunnelRunning $SSH_CONFIG) {
         Write-Host "[$Index] $SSH_CONFIG - Started successfully" -ForegroundColor Green
-        $Env:ALL_PROXY = "socks5://127.0.0.1:$LOCAL_PORT"
+        $Env:ALL_PROXY = "socks5h://127.0.0.1:$LOCAL_PORT"
     } else {
         Write-Host "[$Index] $SSH_CONFIG - Failed to start" -ForegroundColor Red
     }
